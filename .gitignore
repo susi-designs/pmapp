@@ -1,0 +1,26 @@
+# Secrets (OPENROUTER_API_KEY)
+.env*
+
+# OS and editors
+.DS_Store
+.vscode/
+.idea/
+
+# Frontend: dependencies, build output, test reports
+node_modules/
+frontend/.next/
+frontend/out/
+frontend/coverage/
+frontend/test-results/
+frontend/playwright-report/
+frontend/next-env.d.ts
+*.tsbuildinfo
+npm-debug.log*
+
+# Backend: virtualenv, caches, local database, copied frontend build
+.venv/
+__pycache__/
+.pytest_cache/
+.coverage
+backend/data/
+backend/static/

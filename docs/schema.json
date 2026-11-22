@@ -1,0 +1,74 @@
+{
+  "database": "sqlite",
+  "schemaVersion": 1,
+  "pragmas": { "foreign_keys": "ON", "journal_mode": "WAL", "user_version": 1 },
+  "tables": {
+    "users": {
+      "columns": {
+        "id": { "type": "INTEGER", "primaryKey": true, "autoincrement": true },
+        "username": { "type": "TEXT", "notNull": true, "unique": true, "collate": "NOCASE" },
+        "password_hash": { "type": "TEXT", "notNull": true, "note": "scrypt$<salt hex>$<hash hex>" },
+        "created_at": { "type": "TEXT", "notNull": true, "default": "CURRENT_TIMESTAMP" }
+      }
+    },
+    "sessions": {
+      "columns": {
+        "token_hash": { "type": "TEXT", "primaryKey": true, "note": "sha256 of the cookie token; the token itself is never stored" },
+        "user_id": { "type": "INTEGER", "notNull": true, "references": "users(id)", "onDelete": "CASCADE" },
+        "expires_at": { "type": "TEXT", "notNull": true, "note": "ISO timestamp (UTC), 7 days after sign in" }
+      }
+    },
+    "boards": {
+      "columns": {
+        "id": { "type": "INTEGER", "primaryKey": true, "autoincrement": true },
+        "user_id": { "type": "INTEGER", "notNull": true, "references": "users(id)", "onDelete": "CASCADE" },
+        "name": { "type": "TEXT", "notNull": true },
+        "position": { "type": "INTEGER", "notNull": true, "note": "order in the user's board list" }
+      },
+      "indexes": [{ "name": "idx_boards_user", "columns": ["user_id", "position"] }]
+    },
+    "columns": {
+      "columns": {
+        "id": { "type": "TEXT", "primaryKey": true, "note": "opaque uuid string from the backend (defaults, AI) or the frontend (added columns)" },
+        "board_id": { "type": "INTEGER", "notNull": true, "references": "boards(id)", "onDelete": "CASCADE" },
+        "title": { "type": "TEXT", "notNull": true },
+        "position": { "type": "INTEGER", "notNull": true, "note": "0-based order within the board" }
+      },
+      "indexes": [{ "name": "idx_columns_board", "columns": ["board_id", "position"] }]
+    },
+    "cards": {
+      "columns": {
+        "id": { "type": "TEXT", "primaryKey": true, "note": "opaque uuid string, created by the frontend or the backend" },
+        "column_id": { "type": "TEXT", "notNull": true, "references": "columns(id)", "onDelete": "CASCADE" },
+        "title": { "type": "TEXT", "notNull": true },
+        "details": { "type": "TEXT", "notNull": true, "default": "" },
+        "due_date": { "type": "TEXT", "note": "YYYY-MM-DD or NULL" },
+        "priority": { "type": "TEXT", "check": "priority IN ('low', 'medium', 'high')", "note": "or NULL" },
+        "labels": { "type": "TEXT", "notNull": true, "default": "[]", "note": "JSON array of up to 8 strings of 1 to 24 characters" },
+        "position": { "type": "INTEGER", "notNull": true, "note": "0-based order within the column" }
+      },
+      "indexes": [{ "name": "idx_cards_column", "columns": ["column_id", "position"] }]
+    }
+  },
+  "apiShape": {
+    "note": "GET/PUT /api/boards/{id} use the frontend Board type; the backend maps rows to it and back",
+    "board": {
+      "columns": [{ "id": "columns.id", "title": "columns.title", "cardIds": "ids of cards in that column, ordered by cards.position" }],
+      "cards": {
+        "<cards.id>": {
+          "id": "cards.id",
+          "title": "cards.title",
+          "details": "cards.details",
+          "dueDate": "cards.due_date",
+          "priority": "cards.priority",
+          "labels": "cards.labels (parsed)"
+        }
+      }
+    }
+  },
+  "seed": {
+    "demoUser": "init_db creates user / password if missing",
+    "newUser": "every new user gets one board, My first board, with the 5 default columns and a few demo cards",
+    "newBoard": "boards created later get the 5 default columns (Backlog, To Do, In Progress, Review, Done) and no cards"
+  }
+}
