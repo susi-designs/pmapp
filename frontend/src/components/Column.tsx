@@ -52,7 +52,7 @@ export function Column({ column, cards, canDelete, autoEdit, onRename, onDeleteC
         data-testid="column"
         aria-label={column.title}
         className={cn(
-          "flex min-h-0 w-full flex-col rounded-xl border border-t-4 border-t-highlight bg-muted/50 p-2 transition-colors",
+          "flex min-h-0 w-full flex-col rounded-xl border bg-muted/50 p-2 transition-colors",
           cardOver && "bg-accent ring-2 ring-ring",
         )}
       >

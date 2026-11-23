@@ -85,18 +85,3 @@ export function formatDate(date: string, todayDate: string) {
     ...(sameYear ? {} : { year: "numeric" }),
   });
 }
-
-// Tinted chips built from theme tokens, so they work in light and dark.
-const LABEL_COLORS = [
-  "bg-ring/15 text-foreground",
-  "bg-primary/15 text-foreground",
-  "bg-highlight/25 text-foreground",
-  "bg-foreground/10 text-foreground",
-];
-
-/** A stable colour for a label, so the same label looks the same everywhere. */
-export function labelColor(label: string) {
-  let hash = 0;
-  for (const ch of label.toLowerCase()) hash = (hash * 31 + ch.charCodeAt(0)) | 0;
-  return LABEL_COLORS[Math.abs(hash) % LABEL_COLORS.length];
-}

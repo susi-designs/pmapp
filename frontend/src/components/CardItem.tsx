@@ -7,21 +7,12 @@ import { useState, type ReactNode } from "react";
 import { CardDialog } from "@/components/CardDialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { dueStatus, formatDate, labelColor, today } from "@/lib/board";
+import { dueStatus, formatDate, today } from "@/lib/board";
 import type { Card, CardFields } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
-const tint = "border-transparent";
-const PRIORITY = {
-  high: "bg-destructive/10 text-destructive",
-  medium: "bg-highlight/25 text-foreground",
-  low: "bg-secondary text-secondary-foreground",
-};
-const DUE = {
-  overdue: "bg-destructive/10 text-destructive",
-  today: "bg-highlight/25 text-foreground",
-  upcoming: "",
-};
+const PRIORITY = { high: "destructive", medium: "secondary", low: "outline" } as const;
+const DUE = { overdue: "destructive", today: "secondary", upcoming: "outline" } as const;
 
 function Chips({ card }: { card: Card }) {
   if (!card.priority && !card.dueDate && card.labels.length === 0) return null;
@@ -30,18 +21,18 @@ function Chips({ card }: { card: Card }) {
   return (
     <div className="mt-2 flex flex-wrap gap-1">
       {card.priority && (
-        <Badge variant="outline" className={cn(tint, PRIORITY[card.priority])}>
+        <Badge variant={PRIORITY[card.priority]}>
           <span className="sr-only">Priority: </span>
           {card.priority[0].toUpperCase() + card.priority.slice(1)}
         </Badge>
       )}
       {card.dueDate && status && (
-        <Badge variant="outline" className={cn(status !== "upcoming" && tint, DUE[status])}>
+        <Badge variant={DUE[status]}>
           {status === "today" ? "Due today" : `${status === "overdue" ? "Overdue" : "Due"} ${formatDate(card.dueDate, now)}`}
         </Badge>
       )}
       {card.labels.map((label) => (
-        <Badge key={label} variant="outline" className={cn(tint, labelColor(label))}>
+        <Badge key={label} variant="secondary">
           {label}
         </Badge>
       ))}

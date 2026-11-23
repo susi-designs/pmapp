@@ -189,7 +189,7 @@ export function Board({ boardId, initial, username, onSignedOut, title }: Props)
         </div>
         <DragOverlay>
           {dragged && "cardIds" in dragged ? (
-            <div className="w-64 rotate-2 rounded-xl border border-t-4 border-t-highlight bg-card p-3 shadow-xl">
+            <div className="w-64 rotate-2 rounded-xl border bg-card p-3 shadow-xl">
               <p className="text-sm font-semibold">{dragged.title}</p>
               <p className="text-xs text-muted-foreground">{dragged.cardIds.length} cards</p>
             </div>

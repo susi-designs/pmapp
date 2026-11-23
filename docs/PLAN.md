@@ -11,7 +11,7 @@ Phase 1 (Kanban) is complete: Parts 1 to 11 done. Final run on a rebuilt contain
 - Architecture follows the earlier `../kanban` project, with the UI rebuilt on shadcn/ui.
 - Layout: `frontend/` (Next.js), `backend/` (FastAPI, uv), `scripts/`, `Dockerfile` at the repo root, `docs/`.
 - Docker: multi-stage. Stage 1 builds the Next.js static export (`output: "export"`). Stage 2 is Python with uv, copying the export into `backend/static`, which FastAPI serves at `/`. Runs as a non-root user. The port is published on `127.0.0.1:8001` only, so it does not clash with the kanban app on 8000. Container `pmapp`, data volume `pmapp-data`.
-- UI: shadcn/ui (CLI `shadcn@latest`, Tailwind 4, Radix base with the `nova` preset, `lucide-react` icons), with light and dark themes through shadcn's CSS variables. Brand colours from the kanban project are mapped onto the shadcn tokens as kanban used them: purple `#753991` on `primary` (solid buttons), blue `#209dd7` on `ring` (focus), gold `#ecad0a` on a custom `highlight` token, navy `#032147` as foreground, ice blues for secondary, muted and accent. Fonts: Manrope for headings, Inter for body. Components used: alert-dialog, avatar, badge, button, calendar, card, dialog, dropdown-menu, input, label, popover, progress, select, separator, sheet, sonner, textarea, tooltip.
+- UI: shadcn/ui (CLI `shadcn@latest`, Tailwind 4, Radix base with the `nova` preset, `lucide-react` icons), with light and dark themes through shadcn's CSS variables. Plain stock shadcn theme (neutral base colour), no custom brand colour tokens. Fonts: Manrope for headings, Inter for body. Components used: alert-dialog, avatar, badge, button, calendar, card, dialog, dropdown-menu, input, label, popover, progress, select, separator, sheet, sonner, textarea, tooltip.
 - Drag and drop: dnd-kit (shadcn has no Kanban primitive). A grip button is the only drag handle, so the card has no nested interactive content (lesson from kanban).
 - API (all under `/api`): accounts (`/register`, `/login`, `/logout`, `/me`, `/me/password`), boards (`/boards`, `/boards/{id}`), AI chat (`/boards/{id}/chat`). Whole-board `PUT` replace, saved optimistically through an ordered queue on the frontend.
 - Auth: salted scrypt password hashes (stdlib), sessions in SQLite (sha256 of the token, 7 days), HttpOnly `session` cookie. Demo account `user` / `password`.
@@ -42,7 +42,7 @@ Success: the start script serves a page at http://localhost:8001 that calls `/ap
 ## Part 3: Frontend and design system
 
 - [x] `create-next-app` in `frontend/` (TypeScript, Tailwind 4, App Router, `src/`), static export, React Compiler; read `node_modules/next/dist/docs/` first and remove config that export mode rejects
-- [x] `npx shadcn@latest init`; theme tokens with the brand colours (light and dark), fonts, and the base components listed above
+- [x] `npx shadcn@latest init`; stock neutral theme tokens (light and dark), fonts, and the base components listed above
 - [x] App shell: one-row header (app name, board name placeholder, theme toggle, account placeholder) and an empty board area, built only from shadcn components
 - [x] Dockerfile gains the Node build stage
 - [x] Vitest (jsdom, Testing Library, v8 coverage, 80 percent threshold) and Playwright pointed at the container

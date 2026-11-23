@@ -72,3 +72,7 @@ These were found the hard way in `../kanban` (see its `docs/DECISIONS.md`) and a
 - Removed unused generated components (`scroll-area`, `skeleton`) and the unused direct dependency `date-fns` (react-day-picker brings its own).
 - `npm audit` flagged 4 moderate issues in production dependencies, all from the `shadcn` CLI package (ts-morph pulls an old minimatch). The app only imports `shadcn/tailwind.css` at build time, so `shadcn` moved to devDependencies; production dependencies now audit clean. The suggested `npm audit fix --force` would have downgraded shadcn to 1.0.0, so it was not used.
 - Restored the `globals.css`, `ui/` and ThemeToggle entries in `frontend/AGENTS.md`, lost when its structure section was rewritten in Part 8.
+
+## 2026-11-22: Plain shadcn theme
+
+- Decision: drop the kanban brand colours and the custom `highlight` token; `globals.css` uses shadcn's stock neutral theme. Columns lose their gold top border. Card chips use stock Badge variants (`destructive`, `secondary`, `outline`) instead of tinted classes, and per-label colours (`labelColor`) are removed. This supersedes the colour mapping in the earlier theme decision; fonts are unchanged.

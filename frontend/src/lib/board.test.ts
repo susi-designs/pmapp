@@ -7,7 +7,6 @@ import {
   dueStatus,
   findColumnId,
   formatDate,
-  labelColor,
   moveCard,
   moveColumn,
   newCard,
@@ -71,11 +70,6 @@ describe("labels and dates", () => {
     expect(parseLabels(" ux, design,,ux ,  ")).toEqual(["ux", "design"]);
     expect(parseLabels("x".repeat(30))).toEqual(["x".repeat(24)]);
     expect(parseLabels("1,2,3,4,5,6,7,8,9,10")).toHaveLength(8);
-  });
-
-  test("labelColor is stable and ignores case", () => {
-    expect(labelColor("Design")).toBe(labelColor("design"));
-    expect(new Set(["a", "b", "c", "d", "e", "f"].map(labelColor)).size).toBeGreaterThan(1);
   });
 
   test("today uses the local date", () => {
