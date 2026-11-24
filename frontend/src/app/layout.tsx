@@ -9,7 +9,7 @@ const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
 const manrope = Manrope({ variable: "--font-manrope", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "pmapp",
+  title: "Kanban",
   description: "Product management: Kanban boards",
 };
 

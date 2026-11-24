@@ -44,7 +44,7 @@ export function Login({ onSignedIn }: { onSignedIn: (username: string) => void }
         <CardHeader>
           <div className="mb-2 flex items-center gap-2 font-heading text-sm font-semibold">
             <KanbanSquare className="size-5 text-primary" aria-hidden />
-            pmapp
+            Kanban
           </div>
           <h1 className="text-xl font-semibold">{creating ? "Create your account" : "Welcome back"}</h1>
           <CardDescription>{creating ? "Your first board is ready when you are." : "Sign in to your boards."}</CardDescription>

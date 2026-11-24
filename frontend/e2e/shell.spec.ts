@@ -3,7 +3,7 @@ import { signIn } from "./helpers";
 
 test("shows the app shell after signing in", async ({ page }) => {
   await signIn(page);
-  await expect(page.getByText("pmapp", { exact: true })).toBeVisible();
+  await expect(page.getByText("Kanban", { exact: true })).toBeVisible();
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
   await expect(page.getByTestId("column").first()).toBeVisible();
 });

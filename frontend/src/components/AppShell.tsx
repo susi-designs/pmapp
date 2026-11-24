@@ -21,7 +21,7 @@ export function AppShell({ username, onSignedOut, title, actions, children }: Pr
       <header className="flex h-14 shrink-0 items-center gap-3 border-b bg-card px-4">
         <div className="flex shrink-0 items-center gap-2 font-heading font-semibold">
           <KanbanSquare className="size-5 text-primary" aria-hidden />
-          <span className="hidden sm:inline">pmapp</span>
+          <span className="hidden sm:inline">Kanban</span>
         </div>
         <Separator orientation="vertical" className="h-5 data-vertical:self-center" />
         <div className="flex min-w-0 items-center gap-1">{title}</div>

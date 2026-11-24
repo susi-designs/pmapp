@@ -1,4 +1,4 @@
-# pmapp
+# Kanban
 
 A product management app. Phase 1: Kanban boards with accounts, several boards per user, editable columns, card due dates, priorities and labels, and an AI assistant.
 
